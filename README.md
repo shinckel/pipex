@@ -27,7 +27,18 @@ Should behave like: < infile grep a1 | wc -w > outfile
 2. Create a pipe `pipe()`. It has two file descriptors: `pipefd[0]` for the read end, and `pipefd[1]` for the write end;
 3. Fork the first child process `pid1`
 4. Inside the first child process:
-* Close the read end of the pipe `pipefd[0]`
-* Redirect the standard output `STDOUT_FILENO` to the write end of the pipe `pipefd[1]`
-* Close the write end of the pipe `pipefd[1]` (it is only using the read end)
+- Close the read end of the pipe `pipefd[0]`
+- Redirect the standard output `STDOUT_FILENO` to the write end of the pipe `pipefd[1]`
+- Close the write end of the pipe `pipefd[1]` (it is only using the read end)
+- Open the input file `<infile>` in read-only mode
+- Redirect the standard input `STDIN_FILENO` to the input file
+- Execute `cmd1` using the `execlp()` function
+6. Fork the second child process `pid2`
+7. Inside the second child process:
+- 
 
+
+## Functions
+- `perror()` print an error message. It takes a string argument that serves as a prefix to the error message (to the standard error stream). e.g. the prefix `\033[32mError` would set the output color to green;
+- `exit()` terminate the program and return an exit status code;
+- `EXIT_FAILURE` macro is used as an argument to indicate a general failure (equivalent to `exit(1)`);

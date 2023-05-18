@@ -6,23 +6,26 @@
 #    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 14:29:49 by shinckel          #+#    #+#              #
-#    Updated: 2023/01/30 14:30:05 by shinckel         ###   ########.fr        #
+#    Updated: 2023/05/18 18:13:42 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = pipex.a
-SRC = ft_printf\
+NAME := pipex.a
+CC := gcc
+CFLAGS := -Wall -Wextra -Werror -Iheaders/
 
-CC = gcc
-RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -I.
+SOURCE := srcs/*.c
+LIBFT := libft/*.c
+PRINTF := printf/*.c
 
-all:$(NAME)
-
-$(NAME): $(SRC:=.o)
-			ar rc $(NAME) $(SRC:=.o)
+all:	
+		$(CC) $(CFLAGS) $(LIBFT) $(SOURCE) -o $(NAME)
+	 
 clean:
-	$(RM)	$(SRC:=.o)
+
 fclean: clean
-		$(RM)	$(NAME)
-re:	fclean	$(NAME)
+		rm -rf $(NAME) 
+
+re: fclean all
+
+.PHONY: all clean fclean re
