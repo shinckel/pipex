@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 16:24:59 by shinckel         ###   ########.fr       */
+/*   Created: 2023/05/21 17:20:58 by shinckel          #+#    #+#             */
+/*   Updated: 2023/05/21 17:24:52 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../header/pipex.h"
 
-void	error(void)
+char	*ft_strdup(const char *s)
 {
-	perror("\033[0;31mError");
-	exit(EXIT_FAILURE);
-}
+	char	*copy;
+	char	*aux;
+	int		len;
 
-void path()
-{
-	
+	len = ft_strlen(s) + 1;
+	copy = (char *)malloc(sizeof(char) * len);
+	if (copy == NULL)
+		return (0);
+	aux = copy;
+	while (*s)
+	{
+		*aux = *s;
+		aux++;
+		s++;
+	}
+	*aux = '\0';
+	return (copy);
 }

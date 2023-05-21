@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 16:24:59 by shinckel         ###   ########.fr       */
+/*   Created: 2023/05/21 17:22:04 by shinckel          #+#    #+#             */
+/*   Updated: 2023/05/21 17:22:33 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../header/pipex.h"
 
-void	error(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	perror("\033[0;31mError");
-	exit(EXIT_FAILURE);
-}
+	size_t	i;
+	size_t	j;
+	size_t	len;
+	char	*aux;
 
-void path()
-{
-	
+	if (!s1 || !s2)
+		return (NULL);
+	i = ft_strlen(s1);
+	j = ft_strlen(s2);
+	len = i + j;
+	aux = (char *)malloc(sizeof(char) * (len + 1));
+	if (!aux)
+		return (NULL);
+	ft_memmove(aux, s1, i);
+	ft_memmove(aux + i, s2, j);
+	aux[len] = '\0';
+	return (aux);
 }

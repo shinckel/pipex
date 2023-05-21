@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 16:24:59 by shinckel         ###   ########.fr       */
+/*   Created: 2023/05/21 17:24:58 by shinckel          #+#    #+#             */
+/*   Updated: 2023/05/21 17:25:12 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../header/pipex.h"
 
-void	error(void)
+size_t	ft_strlen(const char *s)
 {
-	perror("\033[0;31mError");
-	exit(EXIT_FAILURE);
-}
+	int	i;
 
-void path()
-{
-	
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
