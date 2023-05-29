@@ -30,7 +30,7 @@ Should behave like: < infile grep a1 | wc -w > outfile
 |:-----|:--------:|------:|
 | C0   | **`pipe()`** | communicate between processes |
 
-pipe communicate between processes
+
 
 ## Concepts (my digital notebook)
 - `perror()` print an error message. It takes a string argument that serves as a prefix to the error message (to the standard error stream). e.g. the prefix `\033[32mError` would set the output color to green;
