@@ -1,3 +1,18 @@
+/* Table
+ */
+ .markdown-body .rdmd-table table {}
+
+ /* Rows
+  */
+ .markdown-body .rdmd-table tr {}
+ .markdown-body .rdmd-table thead tr {} /* header row's background */
+ .markdown-body .rdmd-table tr:nth-child(2n) {} /* striped rows' background */
+ 
+ /* Cells
+  */
+ .markdown-body .rdmd-table th {}
+ .markdown-body .rdmd-table td {}
+
 .markdown-body .rdmd-table {
 	--table-text: black;
 	--table-head: #5b1c9f;
