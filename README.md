@@ -2,7 +2,7 @@
 ```diff
 - Disclaimer: This is my summary of the Pipex project. 
 - The Project Description and High-level Overview are pretty straight-forward and short. 
-- The Concepts section works as a digital notebook (sometimes a little messy, as I wanted it to be my personal process sketch).
+- The Concepts section works as a digital notebook (sometimes a little messy, as personal process sketch).
 ```
 
 ## Project Descripton
