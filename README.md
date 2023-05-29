@@ -26,6 +26,12 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `<cmd1>`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `<cmd2>`, taking the pipe's read end as its input, and writes the result to `<outfile>`. The parent process waits for both child processes to finish before exiting.
 
+| Challenge |  Task  | Short description |
+|:-----|:--------:|------:|
+| C0   | **`pipe()`** | communicate between processes |
+
+pipe communicate between processes
+
 ## Concepts (my digital notebook)
 - `perror()` print an error message. It takes a string argument that serves as a prefix to the error message (to the standard error stream). e.g. the prefix `\033[32mError` would set the output color to green;
 - `exit()` terminate the program and return an exit status code;
@@ -43,6 +49,8 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - Passing a pointer to the structure allows for more efficient and direct manipulation of the structure's members, avoiding the need to return and assign a modified structure back to the calling code;
 - `int pipe(int pipefd[2])` after calling pipe() the array pipefd will contain two file descriptors: `pipefd[0]` for the read end and `pipefd[1]` for the write end. It returns 0 for success and -1 for failure (use errno to determine the specific error);
 - `pipe()` is usually used with `fork()` to create a parent-child relationship, where the parent writes data to the pipe, and the child reads the data from the pipe. This allows communication and data sharing between the processes;
+
+
 - `pid_t fork(void)` if it returns positive, it indicates that the calling process is the parent one and the returned value is the process id(PID) of the newly created child process. If it returns zero, indicates that the calling process is the child one. If it returns negative, an error occurred and the child process was not created;
 - It's important to note that after the fork() call, the parent and child processes are independent and can execute different code paths;
 - `pid_t` is a data type that represents process Ids(PIDs). It is defined by the `<sys/types.h>` header file. It is a signed integer;
