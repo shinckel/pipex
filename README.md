@@ -1,6 +1,9 @@
 # Pipex
+```diff
+- Disclaimer: This is my summary of the Pipex project. The Project Description and High-level Overview are pretty straight-forward and short. While the Concepts section works as a digital notebook (sometimes a little messy, as I wanted it to be my personal process sketch).
+```
 
-## Project descripton
+## Project Descripton
 
 - Your program will be executed as follows:
 ```bash
@@ -15,13 +18,13 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - It must take four arguments: file1 and file2 are file names, and cmd1  and cmd2 are shell commands with their parameters.
 - You have to turn in a Makefile which will compile your source files. It must not relink.
 
-## High-level overview
+## High-level Overview
 
 - The program executes <cmd1> with the contents of <infile> as input, and redirects the output to <cmd2>, which writes the result to <outfile>.
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `<cmd1>`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `<cmd2>`, taking the pipe's read end as its input, and writes the result to `<outfile>`. The parent process waits for both child processes to finish before exiting.
 
-## Functions and concepts
+## Concepts (my digital notebook)
 - `perror()` print an error message. It takes a string argument that serves as a prefix to the error message (to the standard error stream). e.g. the prefix `\033[32mError` would set the output color to green;
 - `exit()` terminate the program and return an exit status code;
 - `EXIT_FAILURE` macro is used as an argument to indicate a general failure (equivalent to `exit(1)`);
@@ -42,5 +45,9 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - It's important to note that after the fork() call, the parent and child processes are independent and can execute different code paths;
 - `pid_t` is a data type that represents process Ids(PIDs). It is defined by the `<sys/types.h>` header file. It is a signed integer;
 - `pid_t waitpid(pid_t pid, int *status, int options)` `waitpid(pipex.pid1, NULL, 0)` pipex.pid1 specifies the process ID, NULL specifies the address of an integer variable where the exit status of the child process can be stored (NULL means that the parent process is not interested in the exit status of the child). Zero specifies the options for the `waitpid()`, in this case, the parent process will block until the specified child process terminates;
-- The purpose of calling waitpid(pipex.pid1, NULL, 0); in the given code is to ensure that the parent process waits for the first child process (pipex.pid1) to finish its execution before proceeding further;
+- The purpose of calling `waitpid(pipex.pid1, NULL, 0);` in the given code is to ensure that the parent process waits for the first child process `pipex.pid1` to finish its execution before proceeding further;
+- `open()` system call opens the file specified by pathname.  If the specified file does not exist, it may optionally (if `O_CREAT` is specified in flags) be created by `open()`. The return value is a file descriptor, a small, nonnegative integer that is an index to an entry in the process's table of open file descriptors;
+- `O_TRUNC` if the file already exists, its contents should be cleared before any data is written to it. This is typically done to ensure that the output file starts with a clean slate. 
+- `O_CREAT` this flag is used to create the file if it does not exist.
+
 
