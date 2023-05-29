@@ -26,9 +26,18 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `<cmd1>`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `<cmd2>`, taking the pipe's read end as its input, and writes the result to `<outfile>`. The parent process waits for both child processes to finish before exiting.
 
-| Challenge |  Task  | Short description |
-|:-----|:--------:|------:|
-| C0   | **`pipe()`** | communicate between processes |
+| Task |  Return  | Short description | Why |
+|:-----|:--------:|:--------:|------:|
+| **`fork()`** | id integer, zero new process, not-zero main process | forking the execution line - parent and child processes in parallel | After its call, the parent and child processes are independent and can execute different code paths |
+| **`pid_t`** | | `pid_t fork(void)` | |
+| **`pipe()`**   | **`pipe()`** | communicate between processes | |
+| **`wait()`**  | integer pid_t | stop the execution until the process is finished | parent process waits for the first child process `pipex.pid1` to finish its execution before proceeding further |
+|**`PATH`** | x | (Unix-like operating systems) contains a list of directories, each one represents a search location for executable files. Otherwise, you will receive a 'command not found' error `/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin` | flexible and convenient way to execute commands without needing to know the exact location of the executable |
+| **`open()`** | integer fd | | |
+| **`O_TRUNC`** | x | if the file already exists, its contents should be cleared before any data is written to it | ensure that the output file starts with a clean slate | 
+| **`O_CREAT`** | x | this flag is used to create the file if it does not exist | |
+
+- 
 
 
 
