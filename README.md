@@ -24,11 +24,11 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `cmd1`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `cmd2`, taking the pipe's read end as its input, and writes the result to `outfile`. The parent process waits for both child processes to finish before exiting.
 
-1. _Pipe_ -> create first process(parent)
-2. _Fork_ -> create first child
-3. _Fork_ -> create second child
-4. _Parent(main) process_ -> redirect in and out from 2nd to 3rd process
-5. **Total:** three processes
+1. Pipe: create first process(parent);
+2. Fork: create first child;
+3. Fork: create second child;
+4. Parent(main) process: redirect in and out from 2nd to 3rd process;
+5. Total: three processes.
 
 ```c
 int	main(int argc, char* argv[])
@@ -70,7 +70,7 @@ int	main(int argc, char* argv[])
 }
 ```
 
-## Summary
+## Concepts
 
 - `pipe()` is usually used with `fork()` to create a parent-child relationship, where the parent writes data to the pipe, and the child reads the data from the pipe. This allows communication and data sharing between the processes.
 
@@ -88,3 +88,7 @@ int	main(int argc, char* argv[])
 | **`O_TRUNC`** | x | if the file already exists, its contents should be cleared before any data is written to it | ensure that the output file starts with a clean slate | 
 | **`O_CREAT`** | x | this flag is used to create the file if it does not exist | |
 | **`close()`** | | it takes an integer parameter representing the file descriptor to close | it is standard that you need to close one of the processes of the pipe, e.g.if you write, close the read end and vice-versa |
+| **`execlp()`** | `int execlp(const char *file, const char *arg, ...)`, only return if an error has occurred(-1) | initial argument is the name of a file that is to be executed, subsequent ellipses(arg0, arg1, ..., argn). Together they describe a list of one or more pointers to null-terminated strings that represent the argument list available to the executed program. NULL terminated | The file is sought in the colon-separated list of directory pathnames specified in the PATH environment variable |
+| **`execve()`** | 
+| **`struct`** | `typedef struct` | Declare a new datatype of yout own, unify several variables of different datatypes into a single, new variable. dot notation (.) is used to access members of a struct when you have an actual instance of the struct, whereas the arrow notation (->) is used to access members of a struct when you have a pointer to the struct | Group variables with logical connections |
+| **`linked list`** | `typedef struct node {int number; struct node *next;} node;` | more dynamic data structure, you can expand or shrink it, as it is spread out in computer memory (it doesn't have contiguous memory as arrays). However, how to find it? Every number that I care about will have metadata(pointer to the next element). Last node will be NULL(absence of an address, 0x0) | Plot it anywhere! Where there is room. Nodes connected via pointers (the tradeoff is: it uses more memory) |
