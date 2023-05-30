@@ -24,11 +24,11 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `cmd1`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `cmd2`, taking the pipe's read end as its input, and writes the result to `outfile`. The parent process waits for both child processes to finish before exiting.
 
-| _Pipe_ -> create first process(parent) |
-| _Fork_ -> create first child |
-| _Fork_ -> create second child |
-| _Parent(main) process_ -> redirect in and out from 2nd to 3rd process | 
-| **Total:** three processes |
+1. _Pipe_ -> create first process(parent)
+2. _Fork_ -> create first child
+3. _Fork_ -> create second child
+4. _Parent(main) process_ -> redirect in and out from 2nd to 3rd process
+5. **Total:** three processes
 
 ```c
 int	main(int argc, char* argv[])
@@ -72,7 +72,7 @@ int	main(int argc, char* argv[])
 
 ## Summary
 
-	- `pipe()` is usually used with `fork()` to create a parent-child relationship, where the parent writes data to the pipe, and the child reads the data from the pipe. This allows communication and data sharing between the processes.
+- `pipe()` is usually used with `fork()` to create a parent-child relationship, where the parent writes data to the pipe, and the child reads the data from the pipe. This allows communication and data sharing between the processes.
 
 | Task |  Return  | Description | Why |
 |:----|:-----:|:--------:|--------:|
