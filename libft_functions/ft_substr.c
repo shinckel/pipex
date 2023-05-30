@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:23:49 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 17:24:31 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:41:57 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/pipex.h"
+#include "../header/ft_pipex.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {

@@ -6,7 +6,7 @@
 #    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 14:29:49 by shinckel          #+#    #+#              #
-#    Updated: 2023/05/18 18:13:42 by shinckel         ###   ########.fr        #
+#    Updated: 2023/05/30 16:49:19 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,7 @@ CC := gcc
 CFLAGS := -Wall -Wextra -Werror -Iheaders/
 
 SOURCE := srcs/*.c
-LIBFT := libft/*.c
-PRINTF := printf/*.c
+LIBFT := libft_functions/*.c
 
 all:	
 		$(CC) $(CFLAGS) $(LIBFT) $(SOURCE) -o $(NAME)

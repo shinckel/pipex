@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fr_split.c                                         :+:      :+:    :+:   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 17:19:24 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 17:25:43 by shinckel         ###   ########.fr       */
+/*   Created: 2023/05/30 16:01:36 by shinckel          #+#    #+#             */
+/*   Updated: 2023/05/30 16:01:42 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/pipex.h"
+#include "../header/ft_pipex.h"
 
 static int	word_count(char const *s, char c)
 {

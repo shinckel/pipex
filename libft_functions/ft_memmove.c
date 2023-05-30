@@ -1,34 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/21 17:20:58 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:01 by shinckel         ###   ########.fr       */
+/*   Created: 2023/05/30 15:54:58 by shinckel          #+#    #+#             */
+/*   Updated: 2023/05/30 15:55:02 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/ft_pipex.h"
 
-char	*ft_strdup(const char *s)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char	*copy;
-	char	*aux;
-	int		len;
+	size_t	i;
 
-	len = ft_strlen(s) + 1;
-	copy = (char *)malloc(sizeof(char) * len);
-	if (copy == NULL)
+	i = 0;
+	if (dst == NULL && src == NULL)
 		return (0);
-	aux = copy;
-	while (*s)
+	while (i < n)
 	{
-		*aux = *s;
-		aux++;
-		s++;
+		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+		i++;
 	}
-	*aux = '\0';
-	return (copy);
+	return (dst);
+}
+
+void	*ft_memmove(void *dst, const void *src, size_t n)
+{
+	if (dst == src)
+		return (dst);
+	if (src < dst)
+	{
+		while (n > 0)
+		{
+			n--;
+			((unsigned char *)dst)[n] = ((unsigned char *)src)[n];
+		}
+	}
+	else
+		ft_memcpy(dst, src, n);
+	return (dst);
 }

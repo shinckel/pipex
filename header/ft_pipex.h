@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex.h                                            :+:      :+:    :+:   */
+/*   ft_pipex.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/21 19:10:11 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/05/30 20:05:23 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@
 
 # define ERR_INFILE "Infile"
 # define ERR_OUTFILE "Outfile"
-# define ERR_INPUT "Invalid number of arguments\n"
+# define ERR_INPUT "\033[0;31mInvalid number of arguments\n"
 # define ERR_PIPE "Pipe"
-# define ERR_CMD "Command not found\n"
+# define ERR_CMD "\033[0;31mCommand not found\n"
+
+// pipe() will save its array of fd's here -> int fd[2]
 
 typedef struct s_pipex
 {
@@ -56,7 +58,7 @@ typedef struct s_pipex
 /* free */
 
 /* error */
-
+void	msg_error(char *err);
 /* libft functions */
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *src);
@@ -64,5 +66,6 @@ char	**ft_split(char const *s, char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+void	*ft_memmove(void *dst, const void *src, size_t n);
 
 #endif
