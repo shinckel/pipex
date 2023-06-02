@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 20:05:23 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/05/31 12:46:01 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,22 @@ typedef struct s_pipex
 	int		fd[2];
 	int		infile;
 	int		outfile;
-	char	*paths;
 	char	**cmd_paths;
 	char	**cmd_args;
 	char	*cmd;
 }t_pipex;
 
+/* find path */
+char	*find_path(char **envp, t_pipex *pipex, char *cmd);
+/* create and close pipe */
+int		create_pipe(char **argv, char **envp, t_pipex *pipex);
+void	close_pipes(t_pipex *pipex);
 /* childs */
-
+void	first_child(char **argv, char **envp, t_pipex *pipex);
+void	second_child(char **argv, char **envp, t_pipex *pipex);
 /* free */
-
+void	parent_free(t_pipex *pipex);
+void	child_free(t_pipex *pipex);
 /* error */
 void	msg_error(char *err);
 /* libft functions */
@@ -67,5 +73,6 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t	ft_strlen(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 void	*ft_memmove(void *dst, const void *src, size_t n);
+void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
