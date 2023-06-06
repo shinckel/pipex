@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:01:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 16:01:42 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/06 19:23:40 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int	word_count(char const *s, char c)
 	return (words);
 }
 
+// as you are using malloc to allocate memory, it needs to be freed after usage
+// in this project, cmd_paths and cmd_args!
 char	**ft_split(char const *s, char c)
 {
 	unsigned int	i;

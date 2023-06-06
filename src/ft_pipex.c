@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/01 21:26:15 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:48:16 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 	if (!pipex->cmd)
 	{
 		child_free(pipex);
-		msg_error(ERR_CMD);
-		exit(1);
+		msg_error(ERR_1CMD);
 	}
 	execve(pipex->cmd, pipex->cmd_args, envp);
 }
@@ -40,8 +39,7 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 	if (!pipex->cmd)
 	{
 		child_free(pipex);
-		msg_error(ERR_CMD);
-		exit(1);
+		msg_error(ERR_2CMD);
 	}
 	execve(pipex->cmd, pipex->cmd_args, envp);
 }
@@ -52,10 +50,12 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 	char	*tmp;
 	char	*command;
 
+	if (access(cmd, X_OK | F_OK) == 0)
+		return cmd;
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
 	pipex->cmd_paths = ft_split(*envp + 5, ':');
-	while (pipex->cmd_paths)
+	while (*pipex->cmd_paths != NULL)
 	{
 		tmp = ft_strjoin(*pipex->cmd_paths, "/");
 		command = ft_strjoin(tmp, cmd);
@@ -65,16 +65,9 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 		free(command);
 		pipex->cmd_paths++;
 	}
+	while(*pipex->cmd_paths)
+		free(*pipex->cmd_paths++);
 	return (NULL);
-}
-
-/* fd[0] read end, fd[1] write end, no further communication can occur...
-therefore, no leaks associated to the pipe */
-/* the argument must be pipex adresss(&pipex) for changing original */
-void	close_pipes(t_pipex *pipex)
-{
-	close(pipex->fd[0]);
-	close(pipex->fd[1]);
 }
 
 int	create_pipe(char **argv, char **envp, t_pipex *pipex)
@@ -93,10 +86,12 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	pipex->pid2 = fork();
 	if (pipex->pid2 == 0)
 		second_child(argv, envp, pipex);
-	close_pipes(pipex);
-	waitpid(pipex->pid1, NULL, 0);
-	waitpid(pipex->pid2, NULL, 0);
-	parent_free(pipex);
+	close(pipex->fd[0]);
+	close(pipex->fd[1]);
+	waitpid(pipex->pid1, &pipex->status, 0);
+	waitpid(pipex->pid2, &pipex->status, 0);
+	close(pipex->infile);
+	close(pipex->outfile);
 	return (0);
 }
 
@@ -104,13 +99,17 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	//pipex.outfile = dup(STDOUT_FILENO);
+	pipex.message = dup(STDERR_FILENO);
 	if (argc == 5 && envp[0] != NULL)
+	{
 		create_pipe(argv, envp, &pipex);
+		if (WEXITSTATUS(pipex.status) == 0)
+			write(pipex.message, SUCESS, ft_strlen(SUCESS));
+	}
 	else
 	{
-		write(pipex.outfile, ERR_INPUT, ft_strlen(ERR_INPUT));
-		exit(1);
+		write(pipex.message, ERR_INPUT, ft_strlen(ERR_INPUT));
+		exit(EXIT_FAILURE);
 	}
 	return (0);
 }

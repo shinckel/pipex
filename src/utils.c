@@ -6,33 +6,20 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/31 12:41:42 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/06 21:32:43 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/ft_pipex.h"
 
+// errors
 void	msg_error(char *err)
 {
 	perror(err);
-	exit (1);
+	exit (EXIT_FAILURE);
 }
 
-void	parent_free(t_pipex *pipex)
-{
-	int	i;
-
-	i = 0;
-	close(pipex->infile);
-	close(pipex->outfile);
-	while (pipex->cmd_paths[i])
-	{
-		free(pipex->cmd_paths[i]);
-		i++;
-	}
-	free(pipex->cmd_paths);
-}
-
+// free (manage leaks)
 void	child_free(t_pipex *pipex)
 {
 	int	i;
@@ -43,6 +30,6 @@ void	child_free(t_pipex *pipex)
 		free(pipex->cmd_args[i]);
 		i++;
 	}
-	free(pipex->cmd_args);
+	// free(pipex->cmd_args);
 	free(pipex->cmd);
 }
