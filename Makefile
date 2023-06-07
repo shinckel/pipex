@@ -6,7 +6,7 @@
 #    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 14:29:49 by shinckel          #+#    #+#              #
-#    Updated: 2023/06/06 18:06:39 by shinckel         ###   ########.fr        #
+#    Updated: 2023/06/07 20:53:13 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,9 +22,11 @@ all:
 		$(CC) $(CFLAGS) $(LIBFT) $(SOURCE) -o $(NAME)
 	 
 clean:
+		find . -type f -name "*.txt" ! -name "grocery_list.txt" -exec rm -f {} +
 
-fclean: clean
-		rm -rf $(NAME) 
+
+fclean:
+		rm -rf $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/06 21:32:43 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/07 20:51:42 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,9 @@ void	child_free(t_pipex *pipex)
 	}
 	free(pipex->cmd);
 }
+
+// empty string
+// it should work with first empty cmd, and then a regular one
+// /dev/random
+// valgrind --track-fds=yes
+// close fds (infile, outfile)?
