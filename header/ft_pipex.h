@@ -50,7 +50,8 @@ typedef struct s_pipex
 	int		fd[2];
 	int		infile;
 	int		outfile;
-	int		status;
+	int		status1;
+	int		status2;
 	int		message;
 	char	**cmd_paths;
 	char	**cmd_args;

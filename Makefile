@@ -12,7 +12,7 @@
 
 NAME := pipex
 CC := gcc
-CFLAGS := -Wall -Wextra -Werror -Iheaders -fsanitize=address -g  
+CFLAGS := -Wall -Wextra -Werror -Iheaders -g  
 # -fsanitize=address -g 
 
 SOURCE := src/*.c

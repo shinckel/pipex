@@ -88,8 +88,8 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 		second_child(argv, envp, pipex);
 	close(pipex->fd[0]);
 	close(pipex->fd[1]);
-	waitpid(pipex->pid1, &pipex->status, 0);
-	waitpid(pipex->pid2, &pipex->status, 0);
+	waitpid(pipex->pid1, &pipex->status1, 0);
+	waitpid(pipex->pid2, &pipex->status2, 0);
 	close(pipex->infile);
 	close(pipex->outfile);
 	return (0);
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);
-		if (WEXITSTATUS(pipex.status) == 0)
+		if (WEXITSTATUS(pipex.status1) == 0 && WEXITSTATUS(pipex.status2) == 0)
 			write(pipex.message, SUCESS, ft_strlen(SUCESS));
 	}
 	else
