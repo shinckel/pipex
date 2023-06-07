@@ -24,11 +24,19 @@ Should behave like: < infile grep a1 | wc -w > outfile
 - To achieve it, the program creates a pipe using `pipe()` system call. It then forks twice to create two child processes. The first child process `pid1` executes `cmd1`, and its output is redirected to the write end of the pipe.
 - The second child process `pid2` executes `cmd2`, taking the pipe's read end as its input, and writes the result to `outfile`. The parent process waits for both child processes to finish before exiting.
 
-1. Pipe: create first process(parent);
-2. Fork: create first child;
-3. Fork: create second child;
-4. Parent(main) process: redirect in and out from 2nd to 3rd process;
-5. Total: three processes.
+1. The parent process calls pipe() to create a pipe and obtains the read and write file descriptors.
+2. The parent process calls fork() to create a child process.
+3. The child process inherits the file descriptors from the parent.
+4. The parent process closes the unnecessary end of the pipe (e.g., the write end if it only needs to read, or the read end if it only needs to write).
+5. The child process closes the other end of the pipe.
+6. The parent process writes data to the pipe using the write file descriptor.
+7. The child process reads data from the pipe using the read file descriptor.
+
+### Why there are three proccesses?
+
+1. Parent Process: The parent process is responsible for setting up the input and output redirection and coordinating the execution of the child processes. It creates the pipe to establish communication channels between the processes.
+2. First Child Process: The first child process is created by forking the parent process. Its purpose is to execute the first command specified in the command line and redirect its output to the second child process.
+3. Second Child Process: The second child process is also created by forking the parent process. Its purpose is to execute the second command specified in the command line and receive input from the first child process.
 
 ```c
 int	main(int argc, char* argv[])
@@ -71,8 +79,6 @@ int	main(int argc, char* argv[])
 ```
 
 ## Concepts
-
-- `pipe()` is usually used with `fork()` to create a parent-child relationship, where the parent writes data to the pipe, and the child reads the data from the pipe. This allows communication and data sharing between the processes.
 
 | Task |  Return  | Description |
 |:----|:-----:|:--------:|
