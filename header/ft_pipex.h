@@ -33,7 +33,7 @@
 # include <errno.h>
 
 /* "e" stands for special ANSI codes */
-# define SUCESS "\e[1;102m Success \e[0m \n"
+# define SUCESS "\e[1;42m Success \e[0m \n"
 # define ERR_INFILE "\e[1;41m Infile \e[0m"
 # define ERR_OUTFILE "\e[1;41m Outfile \e[0m"
 # define ERR_INPUT "\e[1;41m Invalid number of arguments \e[0m \n"

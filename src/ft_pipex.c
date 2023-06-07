@@ -51,7 +51,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 	char	*command;
 
 	if (access(cmd, X_OK | F_OK) == 0)
-		return cmd;
+		return (cmd);
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
 	pipex->cmd_paths = ft_split(*envp + 5, ':');
@@ -65,7 +65,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 		free(command);
 		pipex->cmd_paths++;
 	}
-	while(*pipex->cmd_paths)
+	while (*pipex->cmd_paths)
 		free(*pipex->cmd_paths++);
 	return (NULL);
 }

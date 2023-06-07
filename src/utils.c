@@ -20,6 +20,7 @@ void	msg_error(char *err)
 }
 
 // free (manage leaks)
+// free(pipex->cmd_args);
 void	child_free(t_pipex *pipex)
 {
 	int	i;
@@ -30,6 +31,5 @@ void	child_free(t_pipex *pipex)
 		free(pipex->cmd_args[i]);
 		i++;
 	}
-	// free(pipex->cmd_args);
 	free(pipex->cmd);
 }
