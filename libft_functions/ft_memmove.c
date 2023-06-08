@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 15:54:58 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 15:19:23 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:43:10 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "pipex.h"
 
 void	*ft_memcpy(void *dst, const void *src, size_t n)
 {

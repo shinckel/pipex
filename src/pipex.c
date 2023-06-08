@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipex.c                                         :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 15:18:55 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 17:18:36 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "pipex.h"
 
 // first child
 // exit with the right status...
+// dup2 is closing infile here... but is missing outfile
 void	first_child(char **argv, char **envp, t_pipex *pipex)
 {
 	dup2(pipex->fd[1], STDOUT_FILENO);
 	close(pipex->fd[0]);
 	dup2(pipex->infile, STDIN_FILENO);
+	close(pipex->outfile);
 	pipex->cmd_args = ft_split(argv[2], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
@@ -35,6 +37,7 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 	dup2(pipex->fd[0], STDIN_FILENO);
 	close(pipex->fd[1]);
 	dup2(pipex->outfile, STDOUT_FILENO);
+	close(pipex->infile);
 	pipex->cmd_args = ft_split(argv[3], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)

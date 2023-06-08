@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:20:58 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 15:19:31 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:43:17 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_pipex.h"
+#include "pipex.h"
 
 char	*ft_strdup(const char *s)
 {
