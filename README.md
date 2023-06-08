@@ -2,7 +2,7 @@
 ```diff
 + keywords: multi-processes programming
 ```
-![mind-map_pipex](https://github.com/shinckel/pipex/assets/115558344/bb1407db-c877-4b00-95b6-2b95721a4cdf)
+![mind-map_pipex](https://github.com/shinckel/pipex/assets/115558344/6c1f47f3-157e-4165-8ca3-65763946fe27)
 
 ## Project Descripton
 
