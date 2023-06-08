@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:24:58 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:09 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:39 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 size_t	ft_strlen(const char *s)
 {

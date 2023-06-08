@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:22:04 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:05 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:35 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

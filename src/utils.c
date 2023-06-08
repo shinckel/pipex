@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/07 20:51:42 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:15 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 // errors
 void	msg_error(char *err)
@@ -39,3 +39,4 @@ void	child_free(t_pipex *pipex)
 // /dev/random
 // valgrind --track-fds=yes
 // close fds (infile, outfile)?
+// handling errors with split (and if it is NULL)??

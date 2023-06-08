@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 17:16:55 by shinckel          #+#    #+#             */
-/*   Updated: 2023/05/30 15:35:12 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:43 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {

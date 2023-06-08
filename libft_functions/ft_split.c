@@ -6,11 +6,11 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:01:36 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/06 19:23:40 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:19:27 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 static int	word_count(char const *s, char c)
 {

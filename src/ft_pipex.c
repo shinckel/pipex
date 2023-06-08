@@ -6,13 +6,14 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/06 21:48:16 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 15:18:55 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/ft_pipex.h"
+#include "ft_pipex.h"
 
 // first child
+// exit with the right status...
 void	first_child(char **argv, char **envp, t_pipex *pipex)
 {
 	dup2(pipex->fd[1], STDOUT_FILENO);
@@ -25,7 +26,7 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 		child_free(pipex);
 		msg_error(ERR_1CMD);
 	}
-	execve(pipex->cmd, pipex->cmd_args, envp);
+	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
 
 // second child
@@ -41,7 +42,7 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 		child_free(pipex);
 		msg_error(ERR_2CMD);
 	}
-	execve(pipex->cmd, pipex->cmd_args, envp);
+	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
 
 // *envp + 5 skips the "PATH=" prefix and works just as getenv()
