@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 15:43:39 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/08 19:06:09 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@
 # include <string.h>
 # include <stdio.h>
 # include <errno.h>
+
+/* libft functions */
+#include "../libft/header/libft.h"
 
 /* "e" stands for special ANSI codes */
 # define SUCESS "\e[1;42m Success \e[0m \n"
@@ -69,14 +72,5 @@ void	second_child(char **argv, char **envp, t_pipex *pipex);
 void	child_free(t_pipex *pipex);
 /* error */
 void	msg_error(char *err);
-/* libft functions */
-char	*ft_strjoin(char const *s1, char const *s2);
-char	*ft_strdup(const char *src);
-char	**ft_split(char const *s, char c);
-int		ft_strncmp(const char *s1, const char *s2, size_t n);
-size_t	ft_strlen(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-void	*ft_memmove(void *dst, const void *src, size_t n);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
 
 #endif
