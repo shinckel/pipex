@@ -1,5 +1,5 @@
 # Pipex
-This project is initiated by 42 school. For comprehensive information regarding the requirements, please consult the PDF file in the subject folder of the repository. Furthermore, I have provided my notes and a concise summary of new concepts below.
+This project is initiated by 42 school. For comprehensive information regarding the requirements, please consult the PDF file in the subject folder of the repository. Furthermore, I have provided my notes and a concise summary below.
 ```diff
 + keywords: multi-processes programming
 + unidirectional
