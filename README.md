@@ -1,5 +1,5 @@
 # Pipex
-This project was developed for 42 school. For comprehensive information regarding the requirements, please consult the PDF file in the subject folder of the repository. Furthermore, I have provided my notes and a concise summary below.
+_This project was developed for 42 school. For comprehensive information regarding the requirements, please consult the PDF file in the subject folder of the repository. Furthermore, I have provided my notes and a concise summary below._
 ```diff
 + keywords: multi-processes programming
 + unidirectional
@@ -9,7 +9,7 @@ Mindmap about the project structure (shinckel, 2023)
 
 ## High-level Overview
 
-- The program will be executed as follows:
+The program will be executed as follows:
 ```bash
 ./pipex file1 cmd1 cmd2 file2
 
@@ -21,7 +21,7 @@ Should behave like: < infile grep a1 | wc -w > outfile
 ```
 It must take four arguments: `file1` and `file2` are file names, and `cmd1` and `cmd2` are shell commands with their parameters.
 The program executes `cmd1` with the contents of `infile` as input, and redirects the output to `cmd2`, which writes the result to `outfile`.
-Parent Process: The parent process is responsible for setting up the input and output redirection and coordinating the execution of the child processes. It creates the pipe to establish communication channels between the processes.
+The parent process is responsible for setting up the input and output redirection and coordinating the execution of the child processes. It creates the pipe to establish communication channels between the processes.
 
 1. The parent process calls pipe() to create a pipe and obtains the read and write file descriptors;
 2. The parent process calls fork() to create two children;
