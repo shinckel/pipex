@@ -19,9 +19,9 @@ Should behave like: < infile ls -l | wc -l > outfile
 $> ./pipex infile "grep a1" "wc -w" outfile
 Should behave like: < infile grep a1 | wc -w > outfile
 ```
-- It must take four arguments: `file1` and `file2` are file names, and `cmd1` and `cmd2` are shell commands with their parameters.
-- The program executes `cmd1` with the contents of `infile` as input, and redirects the output to `cmd2`, which writes the result to `outfile`.
-- Parent Process: The parent process is responsible for setting up the input and output redirection and coordinating the execution of the child processes. It creates the pipe to establish communication channels between the processes.
+It must take four arguments: `file1` and `file2` are file names, and `cmd1` and `cmd2` are shell commands with their parameters.
+The program executes `cmd1` with the contents of `infile` as input, and redirects the output to `cmd2`, which writes the result to `outfile`.
+Parent Process: The parent process is responsible for setting up the input and output redirection and coordinating the execution of the child processes. It creates the pipe to establish communication channels between the processes.
 
 1. The parent process calls pipe() to create a pipe and obtains the read and write file descriptors;
 2. The parent process calls fork() to create two children;
