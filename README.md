@@ -73,7 +73,7 @@ int	main(int argc, char* argv[])
 
 ## Concepts
 
-| Task |  Return  | Description |
+| Task | Prototype | Description |
 |:----|:-----:|:--------:|
 | **`fork()`** | `pid_t fork(void)`, id zero if child process, not-zero if main process, negative if error | Forking the execution line - parent and child processes in parallel, copy memory over. After its call, the parent and child processes are independent and can execute different code paths |
 | **fd** | `fd = 0 (STDIN), fd = 1 (STDOUT), fd = 2 (STDERR), fd = 3 (file.txt)` | Unique number across a process. Key to a input/output resource, maintained by OS process's table |
