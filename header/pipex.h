@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 19:06:09 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:00:57 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@
 # include <errno.h>
 
 /* libft functions */
-#include "../libft/header/libft.h"
+# include "../libft/header/libft.h"
 
 /* "e" stands for special ANSI codes */
-# define SUCESS "\e[1;42m Success \e[0m \n"
+# define SUCCESS "\e[1;42m Success \e[0m \n"
 # define ERR_INFILE "\e[1;41m Infile \e[0m"
 # define ERR_OUTFILE "\e[1;41m Outfile \e[0m"
 # define ERR_INPUT "\e[1;41m Invalid number of arguments \e[0m \n"

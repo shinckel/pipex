@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 17:18:36 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 11:01:10 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,16 +103,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.message = dup(STDERR_FILENO);
+	pipex.message = STDERR_FILENO;
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);
 		if (WEXITSTATUS(pipex.status1) == 0 && WEXITSTATUS(pipex.status2) == 0)
-			write(pipex.message, SUCESS, ft_strlen(SUCESS));
+		{
+			write(pipex.message, SUCCESS, ft_strlen(SUCCESS));
+			close(pipex.message);
+		}
 	}
 	else
 	{
 		write(pipex.message, ERR_INPUT, ft_strlen(ERR_INPUT));
+		close(pipex.message);
 		exit(EXIT_FAILURE);
 	}
 	return (0);

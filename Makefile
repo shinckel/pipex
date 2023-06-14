@@ -6,7 +6,7 @@
 #    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 14:29:49 by shinckel          #+#    #+#              #
-#    Updated: 2023/06/10 12:02:42 by shinckel         ###   ########.fr        #
+#    Updated: 2023/06/14 11:03:41 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT := $(LIBFT_DIR)/libft.a
 
 # Define colors
 RED := \033[1;41m
-YELLOW := \033[1;103m
+GREEN := \033[1;42m
 RESET := \033[0m
 
 all: $(NAME)
@@ -34,16 +34,16 @@ $(LIBFT):
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-	@echo "$(YELLOW) Pipex compiled $(RESET)"
+	@echo "$(GREEN) Pipex compiled $(RESET)"
 
 clean:
 	find . -type f -name "*.txt" ! -name "grocery_list.txt" -exec rm -f {} +
 	rm -f $(OBJ)
-	@echo "$(RED) Clean .txt files $(RESET)"
+	@echo "$(RED) Remove objects & .txt files $(RESET)"
 
 fclean: clean
 	rm -rf $(NAME)
-	@echo "$(RED) Clean all $(RESET)"
+	@echo "$(RED) Remove $(NAME) $(RESET)"
 
 re: fclean all
 
