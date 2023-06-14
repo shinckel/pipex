@@ -4,7 +4,7 @@ This project was developed for 42 school. For comprehensive information regardin
 + keywords: multi-processes programming
 + unidirectional
 ```
-_Mindmap about the project structure (shinckel, 2023)_
+_Mindmap (shinckel, 2023)_
 ![mind-map_pipex](https://github.com/shinckel/pipex/assets/115558344/85ff3c7a-2594-482f-80b5-7467cf964ce4)
 
 ## High-level Overview
@@ -96,3 +96,5 @@ int	main(int argc, char* argv[])
 | **`fsanitize`** | `-fsanitize=address -g ` | check sanitizer support: Run the command `clang --help | grep sanitize` in your terminal to see if the sanitizer options are listed |
 | **`lldb`** | Run -> `lldb ./pipex` `run grocery_list.txt "head -4" "cat" sorted3.txt` | interactive debugger tool (attach events/errors to the program), explore source code. To enable debugging symbols with LLDB, you need to compile your program with the -g flag. This flag tells the compiler (e.g. gcc or clang) to include debug information in the executable file. Relunch -> `target create ./pipex`. Other commands `breakpoint` `b`, `backtrace` `bt`, `graphical-user-interface` `gui` |
 | **`valgrind`** | `valgrind --track-fds=yes` | check if all your fds are closed at the end of the process |
+| **`cool tests`** | `valgrind --track-fds=yes` | empty string as first cmd and ls as second cmd(this should throw an error, but produce an output anyway), /dev/random as infile, test open fds valgrind --track-fds=yes, handling errors with split (what happen if cmd is NULL?) |
+[MultiPass](https://multipass.run/install)

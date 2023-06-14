@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/08 17:18:36 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 19:59:06 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,15 @@
 // dup2 is closing infile here... but is missing outfile
 void	first_child(char **argv, char **envp, t_pipex *pipex)
 {
-	dup2(pipex->fd[1], STDOUT_FILENO);
-	close(pipex->fd[0]);
-	dup2(pipex->infile, STDIN_FILENO);
-	close(pipex->outfile);
+	pipex->dup1[0] = dup2(pipex->fd[1], STDOUT_FILENO);
+	close_fds(pipex->fd[0], pipex->fd[1]);
+	pipex->dup1[1] = dup2(pipex->infile, STDIN_FILENO);
+	close_fds(pipex->infile, pipex->outfile);
 	pipex->cmd_args = ft_split(argv[2], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		child_free(pipex);
+		cmd_free(pipex->cmd_args);
 		msg_error(ERR_1CMD);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
@@ -34,15 +34,15 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 // second child
 void	second_child(char **argv, char **envp, t_pipex *pipex)
 {
-	dup2(pipex->fd[0], STDIN_FILENO);
-	close(pipex->fd[1]);
-	dup2(pipex->outfile, STDOUT_FILENO);
-	close(pipex->infile);
+	pipex->dup2[0] = dup2(pipex->fd[0], STDIN_FILENO);
+	close_fds(pipex->fd[0], pipex->fd[1]);
+	pipex->dup2[1] = dup2(pipex->outfile, STDOUT_FILENO);
+	close_fds(pipex->infile, pipex->outfile);
 	pipex->cmd_args = ft_split(argv[3], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		child_free(pipex);
+		cmd_free(pipex->cmd_args);
 		msg_error(ERR_2CMD);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
@@ -53,24 +53,24 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 {
 	char	*tmp;
 	char	*command;
+	int		i;
 
+	i = -1;
 	if (access(cmd, X_OK | F_OK) == 0)
 		return (cmd);
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
 	pipex->cmd_paths = ft_split(*envp + 5, ':');
-	while (*pipex->cmd_paths != NULL)
+	while (pipex->cmd_paths[++i] != NULL)
 	{
-		tmp = ft_strjoin(*pipex->cmd_paths, "/");
+		tmp = ft_strjoin(pipex->cmd_paths[i], "/");
 		command = ft_strjoin(tmp, cmd);
 		free(tmp);
 		if (access(command, X_OK | F_OK) == 0)
 			return (command);
 		free(command);
-		pipex->cmd_paths++;
 	}
-	while (*pipex->cmd_paths)
-		free(*pipex->cmd_paths++);
+	cmd_free(pipex->cmd_paths);
 	return (NULL);
 }
 
@@ -90,12 +90,13 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	pipex->pid2 = fork();
 	if (pipex->pid2 == 0)
 		second_child(argv, envp, pipex);
-	close(pipex->fd[0]);
-	close(pipex->fd[1]);
+	// em caso de erro, fechar antes
+	close_fds(pipex->fd[0], pipex->fd[1]);
+	close_fds(pipex->infile, pipex->outfile);
 	waitpid(pipex->pid1, &pipex->status1, 0);
 	waitpid(pipex->pid2, &pipex->status2, 0);
-	close(pipex->infile);
-	close(pipex->outfile);
+	close_fds(pipex->dup1[0], pipex->dup1[1]);
+	close_fds(pipex->dup2[0], pipex->dup2[1]);
 	return (0);
 }
 
@@ -103,16 +104,15 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.message = dup(STDERR_FILENO);
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);
 		if (WEXITSTATUS(pipex.status1) == 0 && WEXITSTATUS(pipex.status2) == 0)
-			write(pipex.message, SUCESS, ft_strlen(SUCESS));
+			write(1, SUCCESS, ft_strlen(SUCCESS));
 	}
 	else
 	{
-		write(pipex.message, ERR_INPUT, ft_strlen(ERR_INPUT));
+		write(1, ERR_INPUT, ft_strlen(ERR_INPUT));
 		exit(EXIT_FAILURE);
 	}
 	return (0);
