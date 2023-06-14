@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/14 16:49:02 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 17:05:20 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 {
 	dup2(pipex->fd[1], STDOUT_FILENO);
 	close(pipex->fd[0]);
+	// dup fd[i]
 	dup2(pipex->infile, STDIN_FILENO);
 	close(pipex->outfile);
+	// infile
 	pipex->cmd_args = ft_split(argv[2], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
@@ -69,6 +71,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 		free(command);
 		pipex->cmd_paths++;
 	}
+	// indice
 	cmd_free(pipex->cmd_paths);
 	return (NULL);
 }
@@ -89,15 +92,13 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	pipex->pid2 = fork();
 	if (pipex->pid2 == 0)
 		second_child(argv, envp, pipex);
+	// em caso de erro, fechar antes
 	close(pipex->fd[0]);
 	close(pipex->fd[1]);
 	waitpid(pipex->pid1, &pipex->status1, 0);
 	waitpid(pipex->pid2, &pipex->status2, 0);
 	close(pipex->infile);
 	close(pipex->outfile);
-	close(0);
-	close(1);
-	close(2);
 	return (0);
 }
 
@@ -114,9 +115,6 @@ int	main(int argc, char **argv, char **envp)
 	else
 	{
 		write(1, ERR_INPUT, ft_strlen(ERR_INPUT));
-		close(0);
-		close(1);
-		close(2);
 		exit(EXIT_FAILURE);
 	}
 	return (0);
