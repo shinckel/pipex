@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/14 11:07:20 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:43:12 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,25 @@ void	msg_error(char *err)
 
 // free (manage leaks)
 // free(pipex->cmd_args);
-void	child_free(t_pipex *pipex)
+// void	child_free(t_pipex *pipex)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (pipex->cmd_args[i])
+// 	{
+// 		free(pipex->cmd_args[i]);
+// 		i++;
+// 	}
+// 	free(pipex->cmd_args);
+// }
+
+void	cmd_free(char **cmd)
 {
 	int	i;
 
 	i = 0;
-	while (pipex->cmd_args[i])
-	{
-		free(pipex->cmd_args[i]);
-		i++;
-	}
-	free(pipex->cmd);
+	while (cmd[i++])
+		free(cmd[i]);
+	free(cmd);
 }

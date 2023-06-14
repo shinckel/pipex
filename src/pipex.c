@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/14 11:01:10 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/14 16:49:02 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		child_free(pipex);
+		cmd_free(pipex->cmd_args);
 		msg_error(ERR_1CMD);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
@@ -42,7 +42,7 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		child_free(pipex);
+		cmd_free(pipex->cmd_args);
 		msg_error(ERR_2CMD);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
@@ -69,8 +69,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 		free(command);
 		pipex->cmd_paths++;
 	}
-	while (*pipex->cmd_paths)
-		free(*pipex->cmd_paths++);
+	cmd_free(pipex->cmd_paths);
 	return (NULL);
 }
 
@@ -96,6 +95,9 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	waitpid(pipex->pid2, &pipex->status2, 0);
 	close(pipex->infile);
 	close(pipex->outfile);
+	close(0);
+	close(1);
+	close(2);
 	return (0);
 }
 
@@ -103,20 +105,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.message = STDERR_FILENO;
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);
 		if (WEXITSTATUS(pipex.status1) == 0 && WEXITSTATUS(pipex.status2) == 0)
-		{
-			write(pipex.message, SUCCESS, ft_strlen(SUCCESS));
-			close(pipex.message);
-		}
+			write(1, SUCCESS, ft_strlen(SUCCESS));
 	}
 	else
 	{
-		write(pipex.message, ERR_INPUT, ft_strlen(ERR_INPUT));
-		close(pipex.message);
+		write(1, ERR_INPUT, ft_strlen(ERR_INPUT));
+		close(0);
+		close(1);
+		close(2);
 		exit(EXIT_FAILURE);
 	}
 	return (0);
