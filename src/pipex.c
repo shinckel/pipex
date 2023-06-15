@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 01:06:27 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:39:47 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 // first child
 // exit with the right status...
-// dup2 is closing infile here... but is missing outfile
 void	first_child(char **argv, char **envp, t_pipex *pipex)
 {
 	int	i;
@@ -65,24 +64,24 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 // *envp + 5 skips the "PATH=" prefix and works just as getenv()
 char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 {
-	char	*tmp;
-	char	*command;
 	int		i;
 
-	i = -1;
-	if (access(cmd, X_OK | F_OK) == 0 && string_empty(cmd) == 0)
+	i = -1;	
+	if (!cmd || ft_isalpha(cmd[0]) == 0)
+		return (NULL);
+	if (access(cmd, X_OK | F_OK) == 0)
 		return (cmd);
 	while (ft_strncmp("PATH", *envp, 4))
 		envp++;
 	pipex->cmd_paths = ft_split(*envp + 5, ':');
 	while (pipex->cmd_paths[++i] != NULL)
 	{
-		tmp = ft_strjoin(pipex->cmd_paths[i], "/");
-		command = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(command, X_OK | F_OK) == 0)
-			return (command);
-		free(command);
+		pipex->tmp = ft_strjoin(pipex->cmd_paths[i], "/");
+		pipex->command = ft_strjoin(pipex->tmp, cmd);
+		free(pipex->tmp);
+		if (access(pipex->command, X_OK | F_OK) == 0)
+			return (pipex->command);
+		free(pipex->command);
 	}
 	i = -1;
 	while (pipex->cmd_paths[++i])
@@ -111,6 +110,7 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	close_fds(pipex->infile, pipex->outfile);
 	waitpid(pipex->pid1, &pipex->status1, 0);
 	waitpid(pipex->pid2, &pipex->status2, 0);
+	// close_fds(STDIN_FILENO, STDOUT_FILENO);
 	return (0);
 }
 
@@ -118,7 +118,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
-	pipex.cmd = NULL;
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);

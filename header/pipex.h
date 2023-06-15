@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 00:59:27 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/15 11:22:12 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ typedef struct s_pipex
 	int		outfile;
 	int		status1;
 	int		status2;
+	char	*tmp;
+	char	*command;
 	char	**cmd_paths;
 	char	**cmd_args;
 	char	*cmd;
@@ -72,8 +74,6 @@ void	close_fds(int fd1, int fd2);
 /* childs */
 void	first_child(char **argv, char **envp, t_pipex *pipex);
 void	second_child(char **argv, char **envp, t_pipex *pipex);
-/* empty string */
-int		string_empty(const char *str);
 /* errors */
 void	msg_error(char *err);
 
