@@ -97,4 +97,4 @@ int	main(int argc, char* argv[])
 | **`lldb`** | Run -> `lldb ./pipex` `run grocery_list.txt "head -4" "cat" sorted3.txt` | interactive debugger tool (attach events/errors to the program), explore source code. To enable debugging symbols with LLDB, you need to compile your program with the -g flag. This flag tells the compiler (e.g. gcc or clang) to include debug information in the executable file. Relunch -> `target create ./pipex`. Other commands `breakpoint` `b`, `backtrace` `bt`, `graphical-user-interface` `gui` |
 | **`valgrind`** | `valgrind --track-fds=yes` | check if all your fds are closed at the end of the process |
 | **`cool tests`** | `valgrind --track-fds=yes` | empty string as first cmd and ls as second cmd(this should throw an error, but produce an output anyway), /dev/random as infile, test open fds valgrind --track-fds=yes, handling errors with split (what happen if cmd is NULL?) |
-[MultiPass](https://multipass.run/install)
+[MultiPass](https://multipass.run/install) | `Ubuntu` | testing with ubuntu and valgrind to control leaks and opened fds. I chose to use this method for creating an Ubuntu VM in my MACOS |
