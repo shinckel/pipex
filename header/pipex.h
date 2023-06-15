@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/14 19:57:53 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/15 00:59:27 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@
 # include "../libft/header/libft.h"
 
 /* "e" stands for special ANSI codes */
-# define SUCCESS "\e[1;42m Success \e[0m \n"
-# define ERR_INFILE "\e[1;41m Infile \e[0m"
-# define ERR_OUTFILE "\e[1;41m Outfile \e[0m"
-# define ERR_INPUT "\e[1;41m Invalid number of arguments \e[0m \n"
-# define ERR_PIPE "\e[1;41m Pipe \e[0m"
-# define ERR_1CMD "\e[1;41m First command not found \e[0m \n"
-# define ERR_2CMD "\e[1;41m Second command not found \e[0m \n"
+# define SUCCESS "\e[1;42m SUCCESS \e[0m \n"
+# define ERR_INFILE "\e[1;41m ERROR infile \e[0m"
+# define ERR_OUTFILE "\e[1;41m ERROR outfile \e[0m"
+# define ERR_INPUT "\e[1;41m ERROR number of arguments invalid \e[0m \n"
+# define ERR_PIPE "\e[1;41m ERROR pipe \e[0m"
+# define ERR_1CMD "\e[1;41m ERROR first command invalid \e[0m \n"
+# define ERR_2CMD "\e[1;41m ERROR second command invalid \e[0m \n"
+# define ERR_BOTH "\e[1;41m ERROR both commands invalid \e[0m \n"
 
 // pipe() will save its array of fd's here -> int fd[2]
 
@@ -71,10 +72,9 @@ void	close_fds(int fd1, int fd2);
 /* childs */
 void	first_child(char **argv, char **envp, t_pipex *pipex);
 void	second_child(char **argv, char **envp, t_pipex *pipex);
-/* free */
-// void	child_free(t_pipex *pipex);
-void	cmd_free(char **cmd);
-/* error */
+/* empty string */
+int		string_empty(const char *str);
+/* errors */
 void	msg_error(char *err);
 
 #endif
