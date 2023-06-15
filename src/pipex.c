@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 11:39:47 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/15 12:01:31 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 
 	i = -1;
 	pipex->dup1[0] = dup2(pipex->fd[1], STDOUT_FILENO);
+	if (pipex->dup2[0] == -1)
+		close(pipex->dup2[0]);
 	close_fds(pipex->fd[0], pipex->fd[1]);
 	pipex->dup1[1] = dup2(pipex->infile, STDIN_FILENO);
+	if (pipex->dup2[1] == -1)
+		close(pipex->dup2[1]);
 	close_fds(pipex->infile, pipex->outfile);
 	pipex->cmd_args = ft_split(argv[2], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
@@ -110,7 +114,6 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 	close_fds(pipex->infile, pipex->outfile);
 	waitpid(pipex->pid1, &pipex->status1, 0);
 	waitpid(pipex->pid2, &pipex->status2, 0);
-	// close_fds(STDIN_FILENO, STDOUT_FILENO);
 	return (0);
 }
 
