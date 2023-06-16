@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/16 13:51:23 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:31:46 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 			free(pipex->cmd_args[i]);
 		free(pipex->cmd_args);
 		close_fds(pipex->dup1[0], pipex->dup1[1]);
-		msg_error(ERR_1CMD, pipex);
+		msg_error(ERR_1CMD, pipex->flag);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
@@ -54,7 +54,7 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 			free(pipex->cmd_args[i]);
 		free(pipex->cmd_args);
 		close_fds(pipex->dup2[0], pipex->dup2[1]);
-		msg_error(ERR_2CMD, pipex);
+		msg_error(ERR_2CMD, pipex->flag);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
@@ -92,12 +92,12 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 {
 	pipex->infile = open(argv[1], O_RDONLY);
 	if (pipex->infile < 0)
-		msg_error(ERR_INFILE, NULL);
+		msg_error(ERR_INFILE, pipex->flag);
 	pipex->outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex->outfile < 0)
-		msg_error(ERR_OUTFILE, NULL);
+		msg_error(ERR_OUTFILE, pipex->flag);
 	if (pipe(pipex->fd) < 0)
-		msg_error(ERR_PIPE, NULL);
+		msg_error(ERR_PIPE, pipex->flag);
 	pipex->pid1 = fork();
 	if (pipex->pid1 == 0)
 		first_child(argv, envp, pipex);
