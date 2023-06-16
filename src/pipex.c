@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/16 20:00:47 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:16:33 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 	int	i;
 
 	i = -1;
-	if (!cmd || ft_isalpha(cmd[0]) == 0)
+	if (!cmd || string_empty(cmd))
 	{
 		pipex->flag = 1;
 		return (NULL);
