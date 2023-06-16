@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 11:22:12 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:37:46 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,8 @@
 # define ERR_PIPE "\e[1;41m ERROR pipe \e[0m"
 # define ERR_1CMD "\e[1;41m ERROR first command invalid \e[0m \n"
 # define ERR_2CMD "\e[1;41m ERROR second command invalid \e[0m \n"
-# define ERR_BOTH "\e[1;41m ERROR both commands invalid \e[0m \n"
 
 // pipe() will save its array of fd's here -> int fd[2]
-
 typedef struct s_pipex
 {
 	pid_t	pid1;
@@ -58,6 +56,7 @@ typedef struct s_pipex
 	int		outfile;
 	int		status1;
 	int		status2;
+	int		flag;
 	char	*tmp;
 	char	*command;
 	char	**cmd_paths;
@@ -75,6 +74,8 @@ void	close_fds(int fd1, int fd2);
 void	first_child(char **argv, char **envp, t_pipex *pipex);
 void	second_child(char **argv, char **envp, t_pipex *pipex);
 /* errors */
-void	msg_error(char *err);
+void	msg_error(char *err, int pipex);
+/* free */
+void	free_paths(t_pipex *pipex);
 
 #endif

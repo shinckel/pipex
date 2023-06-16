@@ -6,16 +6,32 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 11:57:11 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 15:37:32 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	msg_error(char *err)
+void	msg_error(char *err, int pipex)
 {
-	perror(err);
+	if (pipex == 1)
+	{
+		errno = 1;
+		perror(err);
+	}
+	else
+		perror(err);
 	exit (EXIT_FAILURE);
+}
+
+void	free_paths(t_pipex *pipex)
+{
+	int	i;
+
+	i = -1;
+	while (pipex->cmd_paths[++i])
+		free(pipex->cmd_paths[i]);
+	free(pipex->cmd_paths);
 }
 
 void	close_fds(int fd1, int fd2)

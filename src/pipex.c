@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:02:13 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/15 23:48:24 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:00:47 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,18 @@ void	first_child(char **argv, char **envp, t_pipex *pipex)
 
 	i = -1;
 	pipex->dup1[0] = dup2(pipex->fd[1], STDOUT_FILENO);
-	if (pipex->dup1[0] == -1)
-		close(pipex->dup1[0]);
 	close_fds(pipex->fd[0], pipex->fd[1]);
 	pipex->dup1[1] = dup2(pipex->infile, STDIN_FILENO);
-	if (pipex->dup1[1] == -1)
-		close(pipex->dup1[1]);
 	close_fds(pipex->infile, pipex->outfile);
 	pipex->cmd_args = ft_split(argv[2], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		while(pipex->cmd_args[++i])
+		while (pipex->cmd_args[++i])
 			free(pipex->cmd_args[i]);
 		free(pipex->cmd_args);
-		msg_error(ERR_1CMD);
+		close_fds(pipex->dup1[0], pipex->dup1[1]);
+		msg_error(ERR_1CMD, pipex->flag);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
@@ -46,21 +43,18 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 
 	i = -1;
 	pipex->dup2[0] = dup2(pipex->fd[0], STDIN_FILENO);
-	if (pipex->dup2[0] == -1)
-		close(pipex->dup2[0]);
 	close_fds(pipex->fd[0], pipex->fd[1]);
 	pipex->dup2[1] = dup2(pipex->outfile, STDOUT_FILENO);
-	if (pipex->dup2[1] == -1)
-		close(pipex->dup2[1]);
 	close_fds(pipex->infile, pipex->outfile);
 	pipex->cmd_args = ft_split(argv[3], ' ');
 	pipex->cmd = find_path(envp, pipex, pipex->cmd_args[0]);
 	if (!pipex->cmd)
 	{
-		while(pipex->cmd_args[++i])
+		while (pipex->cmd_args[++i])
 			free(pipex->cmd_args[i]);
 		free(pipex->cmd_args);
-		msg_error(ERR_2CMD);
+		close_fds(pipex->dup2[0], pipex->dup2[1]);
+		msg_error(ERR_2CMD, pipex->flag);
 	}
 	exit(execve(pipex->cmd, pipex->cmd_args, envp));
 }
@@ -68,11 +62,14 @@ void	second_child(char **argv, char **envp, t_pipex *pipex)
 // *envp + 5 skips the "PATH=" prefix and works just as getenv()
 char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 {
-	int		i;
+	int	i;
 
-	i = -1;	
+	i = -1;
 	if (!cmd || ft_isalpha(cmd[0]) == 0)
+	{
+		pipex->flag = 1;
 		return (NULL);
+	}
 	if (access(cmd, X_OK | F_OK) == 0)
 		return (cmd);
 	while (ft_strncmp("PATH", *envp, 4))
@@ -87,10 +84,7 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd)
 			return (pipex->command);
 		free(pipex->command);
 	}
-	i = -1;
-	while (pipex->cmd_paths[++i])
-		free(pipex->cmd_paths[i]);
-	free(pipex->cmd_paths);
+	free_paths(pipex);
 	return (NULL);
 }
 
@@ -98,12 +92,12 @@ int	create_pipe(char **argv, char **envp, t_pipex *pipex)
 {
 	pipex->infile = open(argv[1], O_RDONLY);
 	if (pipex->infile < 0)
-		msg_error(ERR_INFILE);
+		msg_error(ERR_INFILE, pipex->flag);
 	pipex->outfile = open(argv[4], O_TRUNC | O_CREAT | O_RDWR, 0644);
 	if (pipex->outfile < 0)
-		msg_error(ERR_OUTFILE);
+		msg_error(ERR_OUTFILE, pipex->flag);
 	if (pipe(pipex->fd) < 0)
-		msg_error(ERR_PIPE);
+		msg_error(ERR_PIPE, pipex->flag);
 	pipex->pid1 = fork();
 	if (pipex->pid1 == 0)
 		first_child(argv, envp, pipex);
@@ -121,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex	pipex;
 
+	pipex.flag = 0;
 	if (argc == 5 && envp[0] != NULL)
 	{
 		create_pipe(argv, envp, &pipex);
