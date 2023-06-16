@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/16 20:14:54 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/06/16 20:18:24 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ char	*find_path(char **envp, t_pipex *pipex, char *cmd);
 int		create_pipe(char **argv, char **envp, t_pipex *pipex);
 /* close */
 void	close_fds(int fd1, int fd2);
-/* childs */
+/* children */
 void	first_child(char **argv, char **envp, t_pipex *pipex);
 void	second_child(char **argv, char **envp, t_pipex *pipex);
 /* errors */
 void	msg_error(char *err, int pipex);
 /* free */
 void	free_paths(t_pipex *pipex);
-/* string empty */
+/* check string empty */
 int	string_empty(char *str);
 
 #endif
