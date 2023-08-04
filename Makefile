@@ -6,7 +6,7 @@
 #    By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 14:29:49 by shinckel          #+#    #+#              #
-#    Updated: 2023/06/14 18:55:45 by shinckel         ###   ########.fr        #
+#    Updated: 2023/08/04 18:55:19 by shinckel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ $(LIBFT):
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $(OBJ) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN) Pipex compiled $(RESET)"
+	@echo "$(GREEN) Ready to PIPEX $(RESET)"
 
 clean:
 	@find . -type f -name "*.txt" ! -name "grocery_list.txt" -exec rm -f {} +
