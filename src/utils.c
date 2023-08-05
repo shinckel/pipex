@@ -6,15 +6,15 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 18:34:00 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/16 20:14:45 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:58:54 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	msg_error(char *err, int pipex)
+void	msg_error(char *err, int empty)
 {
-	if (pipex == 1)
+	if (empty == 1)
 	{
 		errno = 1;
 		perror(err);

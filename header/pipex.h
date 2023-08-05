@@ -6,7 +6,7 @@
 /*   By: shinckel <shinckel@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/30 14:30:15 by shinckel          #+#    #+#             */
-/*   Updated: 2023/06/16 20:18:24 by shinckel         ###   ########.fr       */
+/*   Updated: 2023/08/05 11:58:50 by shinckel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	close_fds(int fd1, int fd2);
 void	first_child(char **argv, char **envp, t_pipex *pipex);
 void	second_child(char **argv, char **envp, t_pipex *pipex);
 /* errors */
-void	msg_error(char *err, int pipex);
+void	msg_error(char *err, int empty);
 /* free */
 void	free_paths(t_pipex *pipex);
 /* check string empty */
